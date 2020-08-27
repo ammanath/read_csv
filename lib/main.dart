@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'dart:io';
+import 'dart:async';
+import 'dart:convert';
 
 void main() {
   runApp(ReadCsv());
@@ -10,7 +13,6 @@ class ReadCsv extends StatelessWidget {
     return MaterialApp(
       title: 'Read CSV file',
       theme: ThemeData(
-
         primarySwatch: Colors.red,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
@@ -37,6 +39,23 @@ class _ReadCsvHomePageState extends State<ReadCsvHomePage> {
     });
   }
 
+  void processFile() {
+    //TODO: Fix to read file with correct path
+    File data = new File("../winequality-red.csv");
+    data.readAsLines().then(processLines).catchError((e) => handleError(e));
+  }
+
+  processLines(List<String> lines) {
+    // process lines:
+    for (var line in lines) {
+      print(line);
+    }
+  }
+
+  handleError(e) {
+    print("An error...");
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -61,7 +80,7 @@ class _ReadCsvHomePageState extends State<ReadCsvHomePage> {
         onPressed: _incrementCounter,
         tooltip: 'Increment',
         child: Icon(Icons.add),
-      ), 
+      ),
     );
   }
 }
